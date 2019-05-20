@@ -1,0 +1,116 @@
+# Benchmark results
+
+## Medium size application
+
+With the following routes:
+
+----
+/404
+/500
+/platform
+/services
+/signin
+/**
+/blog.atom
+/blog/category/{category}.atom
+/blog/broadcasts.atom
+/blog
+/blog/{year:\\\\d+}/{month:\\\\d+}/{day:\\\\d+}/{slug}
+/blog/broadcasts
+/blog/{year:\\\\d+}/{month:\\\\d+}
+/docs/reference
+/docs
+/webhook/docs/guides
+/webhook/docs/guides/{repositoryName}
+/guides/gs/{repositoryName}
+/guides/tut/{repositoryName}
+/error
+/tools
+/tools/eclipse
+/tools/sts
+/tools/sts/all
+/team/{username}
+/team
+/search
+/project
+/questions
+/projects/{projectId}
+/badges/{projectId}.svg
+----
+
+Roughly +20% throughput improvement and lower allocation rate.
+
+----
+Benchmark                                                                Mode  Cnt        Score        Error   Units
+TrieMatchingBenchmark.baseline                                          thrpt    5  4824710.768 ± 204899.417   ops/s
+TrieMatchingBenchmark.baseline:·gc.alloc.rate                           thrpt    5      234.908 ±      8.419  MB/sec
+TrieMatchingBenchmark.baseline:·gc.alloc.rate.norm                      thrpt    5       86.971 ±      0.007    B/op
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Eden_Space                  thrpt    5      235.037 ±      7.908  MB/sec
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Eden_Space.norm             thrpt    5       87.020 ±      1.574    B/op
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Survivor_Space              thrpt    5        0.097 ±      0.040  MB/sec
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Survivor_Space.norm         thrpt    5        0.036 ±      0.014    B/op
+TrieMatchingBenchmark.baseline:·gc.count                                thrpt    5      405.000               counts
+TrieMatchingBenchmark.baseline:·gc.time                                 thrpt    5      250.000                   ms
+TrieMatchingBenchmark.iteratingRouter                                   thrpt    5  1649402.510 ±  17487.825   ops/s
+TrieMatchingBenchmark.iteratingRouter:·gc.alloc.rate                    thrpt    5     2898.862 ±     28.571  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.alloc.rate.norm               thrpt    5     2340.447 ±      0.411    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Eden_Space           thrpt    5     2898.498 ±     29.264  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Eden_Space.norm      thrpt    5     2340.163 ±     29.967    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Survivor_Space       thrpt    5        0.208 ±      0.067  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Survivor_Space.norm  thrpt    5        0.168 ±      0.053    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.count                         thrpt    5      791.000               counts
+TrieMatchingBenchmark.iteratingRouter:·gc.time                          thrpt    5      480.000                   ms
+TrieMatchingBenchmark.trieRouter                                        thrpt    5  1975234.734 ±  55956.965   ops/s
+TrieMatchingBenchmark.trieRouter:·gc.alloc.rate                         thrpt    5     1606.167 ±     39.601  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.alloc.rate.norm                    thrpt    5     1121.199 ±      0.344    B/op
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Eden_Space                thrpt    5     1606.922 ±     30.541  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Eden_Space.norm           thrpt    5     1121.737 ±     13.885    B/op
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Survivor_Space            thrpt    5        0.199 ±      0.105  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Survivor_Space.norm       thrpt    5        0.139 ±      0.072    B/op
+TrieMatchingBenchmark.trieRouter:·gc.count                              thrpt    5      792.000               counts
+TrieMatchingBenchmark.trieRouter:·gc.time                               thrpt    5      476.000                   ms
+----
+
+
+## Small application
+
+With the following routes:
+
+----
+/
+/**
+/users/{name}
+/projects/{projectId}
+/products/{id}
+----
+
+----
+                                                                         Mode  Cnt         Score       Error   Units
+TrieMatchingBenchmark.baseline                                          thrpt    5  15791989.400 ± 86086.020   ops/s
+TrieMatchingBenchmark.baseline:·gc.alloc.rate                           thrpt    5       429.424 ±   141.793  MB/sec
+TrieMatchingBenchmark.baseline:·gc.alloc.rate.norm                      thrpt    5        99.428 ±    32.075    B/op
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Eden_Space                  thrpt    5       430.209 ±   142.288  MB/sec
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Eden_Space.norm             thrpt    5        99.610 ±    32.169    B/op
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Survivor_Space              thrpt    5         0.156 ±     0.076  MB/sec
+TrieMatchingBenchmark.baseline:·gc.churn.PS_Survivor_Space.norm         thrpt    5         0.036 ±     0.018    B/op
+TrieMatchingBenchmark.baseline:·gc.count                                thrpt    5       716.000              counts
+TrieMatchingBenchmark.baseline:·gc.time                                 thrpt    5       434.000                  ms
+TrieMatchingBenchmark.iteratingRouter                                   thrpt    5   3952587.646 ± 89168.648   ops/s
+TrieMatchingBenchmark.iteratingRouter:·gc.alloc.rate                    thrpt    5      2087.030 ±    45.800  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.alloc.rate.norm               thrpt    5       906.145 ±     0.266    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Eden_Space           thrpt    5      2084.444 ±    55.185  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Eden_Space.norm      thrpt    5       905.021 ±    11.830    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Survivor_Space       thrpt    5         0.187 ±     0.048  MB/sec
+TrieMatchingBenchmark.iteratingRouter:·gc.churn.PS_Survivor_Space.norm  thrpt    5         0.081 ±     0.020    B/op
+TrieMatchingBenchmark.iteratingRouter:·gc.count                         thrpt    5       766.000              counts
+TrieMatchingBenchmark.iteratingRouter:·gc.time                          thrpt    5       470.000                  ms
+TrieMatchingBenchmark.trieRouter                                        thrpt    5   2593330.235 ± 35306.380   ops/s
+TrieMatchingBenchmark.trieRouter:·gc.alloc.rate                         thrpt    5      1590.922 ±    20.734  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.alloc.rate.norm                    thrpt    5       923.759 ±     0.238    B/op
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Eden_Space                thrpt    5      1591.760 ±    27.896  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Eden_Space.norm           thrpt    5       924.245 ±    10.252    B/op
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Survivor_Space            thrpt    5         0.178 ±     0.049  MB/sec
+TrieMatchingBenchmark.trieRouter:·gc.churn.PS_Survivor_Space.norm       thrpt    5         0.103 ±     0.029    B/op
+TrieMatchingBenchmark.trieRouter:·gc.count                              thrpt    5       775.000              counts
+TrieMatchingBenchmark.trieRouter:·gc.time                               thrpt    5       477.000                  ms
+----
